@@ -46,7 +46,23 @@ Nếu bỏ qua bất kỳ bước nào, bạn có thể gặp lỗi như:
 
 ## 3. Cấu hình Phiên bản Package (Bắt buộc)
 
-> ⚠️ **Cực kỳ quan trọng**: Tất cả package EF Core **phải cùng phiên bản 8.0.11** để tránh lỗi `TypeLoadException`.
+## ⚠️ CỰC KỲ QUAN TRỌNG – EF CORE VERSION
+
+⚠️ **Tất cả package Entity Framework Core BẮT BUỘC phải cùng phiên bản 8.0.11**
+để tránh lỗi runtime `TypeLoadException`.
+
+### ❌ Vì sao KHÔNG dùng EF Core 8.0.22?
+
+Khi nâng EF Core lên **8.0.22**, NuGet sẽ **tự động kéo**
+`Npgsql.EntityFrameworkCore.PostgreSQL` **lên version 9.0.x**.
+
+👉 Trong khi project đang chạy trên:
+- **.NET 8**
+- **EF Core 8**
+- Code + Migration viết theo EF Core 8
+
+➡️ **Npgsql 9.0 chỉ tương thích EF Core 9**  
+➡️ Dẫn tới **xung đột internal API** và ứng dụng **crash khi chạy**
 
 Cập nhật file **`YourProject.csproj`** như sau:
 
@@ -219,11 +235,21 @@ Sau đó restart Visual Studio.
 
 ## 9. Ghi chú quan trọng
 
-* PostgreSQL service **phải đang chạy** tại cổng `5432`
-* Không dùng lại Migration SQL Server
-* Khi đổi DB Provider → **luôn reset migration**
-* PostgreSQL phân biệt **chữ hoa / chữ thường** trong tên bảng
+## CÁC THÔNG TIN ĐỂ LƯU APP SETTING
 
+![App Setting](Information.png)
+
+---
+
+## CÁCH KẾT NỐI POSTGRESQL
+
+![PostgreSQL Connection](Setting.png)
+
+---
+
+## CÁCH XEM DATA
+
+![View Data](ViewData.png)
 ---
 
 ## ✅ Kết luận
